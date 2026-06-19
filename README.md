@@ -11,15 +11,11 @@ The **Alignment Tax** represents the additional computational cost, throughput r
 
 These variants represent the primary post-training algorithms used to align models, each imposing a unique tax on computational scaling efficiency.
 
-*   **RLHF (Reinforcement Learning from Human Feedback)**
-    *   *Mechanism:* Uses a standalone Reward Model coupled with PPO (Proximal Policy Optimization) to iteratively update the policy network.
-    *   *Compute Tax:* **Very High.** Requires keeping up to four massive models in VRAM concurrently (Actor, Critic, Reference, and Reward). This dramatically scales down the max batch size or forces significant distributed infrastructure overhead.
-*   **DPO (Direct Preference Optimization)**
-    *   *Mechanism:* Eliminates the explicit reward model by mathematically optimizing the policy network directly on pairwise preference data.
-    *   *Compute Tax:* **Moderate.** Requires maintaining an active Reference Model alongside the Target Model to compute a KL-divergence penalty. This effectively doubles the baseline training memory footprint.
-*   **KTO (Kahneman-Tversky Optimization)**
-    *   *Mechanism:* Abandons pairwise preferences entirely, using binary utility metrics (Good/Bad) applied directly to singular outputs.
-    *   *Compute Tax:* **Low.** Operates without requiring an active reference model in memory during the optimization steps, unlocking standard compute-optimal utilization.
+| Variant | Mechanism | Compute Tax | First Used (Year) | First Used Paper |
+| :--- | :--- | :--- | :--- | :--- |
+| **RLHF (Reinforcement Learning from Human Feedback)** | Uses a standalone Reward Model coupled with PPO (Proximal Policy Optimization) to iteratively update the policy network. | **Very High.** Requires keeping up to four massive models in VRAM concurrently (Actor, Critic, Reference, and Reward). This dramatically scales down the max batch size or forces significant distributed infrastructure overhead. | 2017 | [Christiano et al.](https://arxiv.org/abs/1706.03741) |
+| **DPO (Direct Preference Optimization)** | Eliminates the explicit reward model by mathematically optimizing the policy network directly on preference data. | **Moderate.** Requires maintaining an active Reference Model alongside the Target Model to compute a KL-divergence penalty. This effectively doubles the baseline training memory footprint. | 2023 | [Rafailov et al.](https://arxiv.org/abs/2305.18290) |
+| **KTO (Kahneman-Tversky Optimization)** | Abandons pairwise preferences entirely, using binary utility metrics (Good/Bad) applied directly to singular outputs. | **Low.** Operates without requiring an active reference model in memory during the optimization steps, unlocking standard compute-optimal utilization. | 2024 | [Ethayarajh et al.](https://arxiv.org/abs/2402.01306) |
 
 ---
 
@@ -27,12 +23,10 @@ These variants represent the primary post-training algorithms used to align mode
 
 These methods bake alignment features directly into data scaling or model design rather than relying purely on fine-tuning.
 
-*   **SFT-Only (Supervised Fine-Tuning) Alignment**
-    *   *Mechanism:* Feeding the model highly curated, synthetically generated high-quality safety demonstrations.
-    *   *Compute Tax:* **Data Efficiency Overhead.** High-quality synthetic data generation requires massive upstream inference compute. However, downstream training time is highly compute-optimal.
-*   **Constitutional AI (RLAIF)**
-    *   *Mechanism:* Pioneered by Anthropic, this uses a set of principles (a constitution) to guide a critique-and-revision loop using an AI model to generate its own alignment data.
-    *   *Compute Tax:* **Massive Upstream Inference Overhead.** Billions of forward-pass tokens are spent running critiques prior to actual model optimization.
+| Variant | Mechanism | Compute Tax | First Used (Year) | First Used Paper |
+| :--- | :--- | :--- | :--- | :--- |
+| **SFT-Only (Supervised Fine-Tuning) Alignment** | Feeding the model highly curated, synthetically generated high-quality safety demonstrations. | **Data Efficiency Overhead.** High-quality synthetic data generation requires massive upstream inference compute. However, downstream training time is highly compute-optimal. | 2023 | [Zhou et al. (LIMA)](https://arxiv.org/abs/2305.11206) |
+| **Constitutional AI (RLAIF)** | Pioneered by Anthropic, this uses a set of principles (a constitution) to guide a critique-and-revision loop using an AI model to generate its own alignment data. | **Massive Upstream Inference Overhead.** Billions of forward-pass tokens are spent running critiques prior to actual model optimization. | 2022 | [Bai et al.](https://arxiv.org/abs/2212.08073) |
 
 ---
 
@@ -40,12 +34,11 @@ These methods bake alignment features directly into data scaling or model design
 
 These examples represent the capability trade-offs that alter what "optimal performance" means after applying alignment safety boundaries.
 
-*   **The In-Distribution Degradation Tax**
-    *   *Example:* A model heavily aligned to be polite and safe might systematically refuse to answer benign medical or chemical engineering prompts. This artificially inflates the cross-entropy evaluation loss on specialized text distributions.
-*   **The Chain-of-Thought (CoT) Obfuscation Tax**
-    *   *Example:* Forcing an advanced reasoning model to simultaneously output hidden safety filtering checks alongside raw thoughts reduces the actual hidden-token generation window available for math and coding logic.
-*   **The Prompt Engineering Inflation Tax**
-    *   *Example:* Hardcoding safety system prompts or embedding multi-turn conversational guardrails fills up the context window. This uses precious KV-cache computation on non-task tokens.
+| Example | Description / Impact | First Used (Year) | First Used Paper |
+| :--- | :--- | :--- | :--- |
+| **The In-Distribution Degradation Tax** | A model heavily aligned to be polite and safe might systematically refuse to answer benign medical or chemical engineering prompts. This artificially inflates the cross-entropy evaluation loss on specialized text distributions. | 2021 | [Askell et al.](https://arxiv.org/abs/2112.00861) |
+| **The Chain-of-Thought (CoT) Obfuscation Tax** | Forcing an advanced reasoning model to simultaneously output hidden safety filtering checks alongside raw thoughts reduces the actual hidden-token generation window available for math and coding logic. | 2025 | [Cooper Stickland & Korbak](https://arxiv.org/abs/2502.13943) |
+| **The Prompt Engineering Inflation Tax** | Hardcoding safety system prompts or embedding multi-turn conversational guardrails fills up the context window. This uses precious KV-cache computation on non-task tokens. | 2023 | [Jiang et al. (LLMLingua)](https://arxiv.org/abs/2310.05736) |
 
 ---
 
@@ -53,11 +46,7 @@ These examples represent the capability trade-offs that alter what "optimal perf
 
 To account for the alignment tax, the classic Chinchilla scaling equation must be modified to prevent models from underperforming.
 
-*   **The Safe Compute Equation**
-    *   Standard scaling targets a raw loss function:
-        $$L(N, D) = \frac{A}{N^\alpha} + \frac{B}{D^\beta} + E$$
-    *   Aligned scaling introduces a safety scaling penalty ($T_{align}$):
-        $$L_{safe}(N, D) = L(N, D) + T_{align}(N, D)$$
-*   **Parameters vs. Data Shift**
-    *   Empirical tracking shows that safety behaviors require higher parameter thresholds ($N$) to manifest reliably compared to raw token ingestion ($D$).
-    *   As a result, a compute-optimal aligned model must be scaled **wider and deeper** earlier in its compute lifecycle than a raw unaligned base model.
+| Concept | Details | First Used (Year) | First Used Paper |
+| :--- | :--- | :--- | :--- |
+| **The Safe Compute Equation** | Standard scaling targets a raw loss function:<br>$$L(N, D) = \frac{A}{N^\alpha} + \frac{B}{D^\beta} + E$$<br>Aligned scaling introduces a safety scaling penalty ($T_{align}$):<br>$$L_{safe}(N, D) = L(N, D) + T_{align}(N, D)$$ | 2022 | [Hoffmann et al. (Chinchilla)](https://arxiv.org/abs/2203.15556) |
+| **Parameters vs. Data Shift** | Empirical tracking shows that safety behaviors require higher parameter thresholds ($N$) to manifest reliably compared to raw token ingestion ($D$).<br>As a result, a compute-optimal aligned model must be scaled **wider and deeper** earlier in its compute lifecycle than a raw unaligned base model. | 2020 | [Kaplan et al.](https://arxiv.org/abs/2001.08361) |
