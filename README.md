@@ -1,13 +1,25 @@
-# Awesome-Alignment-TaxCompute-Optimal-Scaling
-## Alignment-Tax & Compute-Optimal Scaling: Variants & Examples
+# ⚖️ Awesome Alignment Tax & Compute-Optimal Scaling
 
-When training Large Language Models, standard **Compute-Optimal Scaling** (e.g., Chinchilla Scaling Laws) dictates how to balance model parameters ($N$) and training tokens ($D$) to achieve the lowest possible loss for a given compute budget ($C$). 
+<div align="center">
+  <img src="assets/banner.svg" alt="Awesome Alignment Tax & Compute-Optimal Scaling Banner" width="100%"/>
+</div>
 
-The **Alignment Tax** represents the additional computational cost, throughput reduction, or performance degradation incurred to make an AI model safe, helpful, and non-toxic. Integrating safety objectives shifts the traditional compute-optimal frontier.
+<p align="center">
+  <a href="https://github.com/ishandutta2007/Awesome-Awesome-Awesome"><img src="https://img.shields.io/badge/Awesome-%E2%9C%94-blueviolet?style=flat-square&logo=github" alt="Awesome"/></a>
+  <a href="https://github.com/ishandutta2007/Awesome-Alignment-TaxCompute-Optimal-Scaling/blob/main/LICENSE"><img src="https://img.shields.io/github/license/ishandutta2007/Awesome-Alignment-TaxCompute-Optimal-Scaling" alt="License"/></a>
+  <a href="https://github.com/ishandutta2007/Awesome-Alignment-TaxCompute-Optimal-Scaling/stargazers"><img src="https://img.shields.io/github/stars/ishandutta2007/Awesome-Alignment-TaxCompute-Optimal-Scaling" alt="Stars"/></a>
+  <a href="https://github.com/ishandutta2007"><img alt="GitHub followers" src="https://img.shields.io/github/followers/ishandutta2007?label=Follow" /></a>
+</p>
+
+## 📖 Introduction & SEO Overview
+
+When training Large Language Models (LLMs), standard **Compute-Optimal Scaling** (e.g., Chinchilla Scaling Laws) dictates how to balance model parameters ($N$) and training tokens ($D$) to achieve the lowest possible loss for a given compute budget ($C$). 
+
+The **Alignment Tax** represents the additional computational cost, throughput reduction, or performance degradation incurred to make an AI model safe, helpful, and non-toxic. Integrating safety objectives shifts the traditional compute-optimal frontier. This repository tracks key variants, optimization methodologies, architectural options, and downstream scaling shifts related to the alignment tax.
 
 ---
 
-## 1. Algorithmic Optimization Variants (The Tax Matrix)
+## ⚙️ 1. Algorithmic Optimization Variants (The Tax Matrix)
 
 These variants represent the primary post-training algorithms used to align models, each imposing a unique tax on computational scaling efficiency.
 
@@ -19,7 +31,7 @@ These variants represent the primary post-training algorithms used to align mode
 
 ---
 
-## 2. Structural & Architectural Variants
+## 🏛️ 2. Structural & Architectural Variants
 
 These methods bake alignment features directly into data scaling or model design rather than relying purely on fine-tuning.
 
@@ -30,7 +42,7 @@ These methods bake alignment features directly into data scaling or model design
 
 ---
 
-## 3. Downstream Performance Taxes (Capabilities Loss)
+## 📉 3. Downstream Performance Taxes (Capabilities Loss)
 
 These examples represent the capability trade-offs that alter what "optimal performance" means after applying alignment safety boundaries.
 
@@ -42,7 +54,7 @@ These examples represent the capability trade-offs that alter what "optimal perf
 
 ---
 
-## 4. Mathematical Modeling & Shifted Scaling Frontiers
+## 🧮 4. Mathematical Modeling & Shifted Scaling Frontiers
 
 To account for the alignment tax, the classic Chinchilla scaling equation must be modified to prevent models from underperforming.
 

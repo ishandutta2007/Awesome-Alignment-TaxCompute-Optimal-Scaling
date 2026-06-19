@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a051b" />
+      <stop offset="50%" stop-color="#0f0c29" />
+      <stop offset="100%" stop-color="#24243e" />
+    </linearGradient>
+    
+    <!-- Accent Gradients -->
+    <linearGradient id="primary-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00f2fe" />
+      <stop offset="100%" stop-color="#4facfe" />
+    </linearGradient>
+    <linearGradient id="tax-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ff0844" />
+      <stop offset="100%" stop-color="#ffb199" />
+    </linearGradient>
+    <linearGradient id="text-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#e0e0ff" />
+    </linearGradient>
+    
+    <!-- Grid Pattern -->
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255, 255, 255, 0.04)" stroke-width="1" />
+    </pattern>
+  </defs>
+
+  <!-- Background Layer -->
+  <rect width="1200" height="400" fill="url(#bg-grad)" />
+  <rect width="1200" height="400" fill="url(#grid)" />
+
+  <!-- Abstract Geometry & Curves -->
+  <!-- Axis Lines -->
+  <line x1="750" y1="350" x2="1150" y2="350" stroke="rgba(255,255,255,0.2)" stroke-width="2" />
+  <line x1="750" y1="100" x2="750" y2="350" stroke="rgba(255,255,255,0.2)" stroke-width="2" />
+  
+  <!-- Chinchilla Frontier Curve (Compute-Optimal) -->
+  <!-- A smooth power-law curve -->
+  <path d="M 750 150 Q 850 320 1150 340" fill="none" stroke="url(#primary-grad)" stroke-width="5" stroke-linecap="round" />
+  
+  <!-- Shifted Frontier Curve (Alignment Tax Penalty) -->
+  <path d="M 750 100 Q 900 280 1150 310" fill="none" stroke="url(#tax-grad)" stroke-width="5" stroke-dasharray="8,5" stroke-linecap="round" />
+  
+  <!-- Connecting arrow / Tax label -->
+  <path d="M 900 220 L 930 180" fill="none" stroke="#ff0844" stroke-width="2" marker-end="url(#arrow)" />
+  <text x="940" y="175" fill="#ff0844" font-family="'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="bold">Alignment Tax Shift</text>
+  
+  <!-- Labels for Curves -->
+  <text x="1000" y="325" fill="#00f2fe" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold">Compute-Optimal Frontier</text>
+  <text x="1000" y="295" fill="#ffb199" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold">Aligned Frontier (L_safe)</text>
+  <text x="735" y="90" fill="rgba(255,255,255,0.6)" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" text-anchor="end">Loss (L)</text>
+  <text x="1150" y="375" fill="rgba(255,255,255,0.6)" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" text-anchor="middle">Compute (C)</text>
+
+  <!-- Title & Branding -->
+  <g transform="translate(80, 100)">
+    <!-- Decorative Tag -->
+    <rect width="180" height="30" rx="15" fill="rgba(0, 242, 254, 0.1)" stroke="url(#primary-grad)" stroke-width="1.5" />
+    <text x="90" y="20" fill="#00f2fe" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" letter-spacing="2">AI ALIGNMENT LAWS</text>
+    
+    <!-- Title -->
+    <text x="0" y="80" fill="url(#text-grad)" font-family="'Segoe UI', Roboto, sans-serif" font-size="46" font-weight="800" letter-spacing="-1">
+      Alignment Tax &amp;
+    </text>
+    <text x="0" y="135" fill="url(#text-grad)" font-family="'Segoe UI', Roboto, sans-serif" font-size="46" font-weight="800" letter-spacing="-1">
+      Compute-Optimal Scaling
+    </text>
+    
+    <!-- Subtitle -->
+    <text x="0" y="185" fill="rgba(255, 255, 255, 0.6)" font-family="'Segoe UI', Roboto, sans-serif" font-size="18" font-weight="400">
+      Exploring the frontiers of safe, efficient Large Language Models.
+    </text>
+  </g>
+</svg>
