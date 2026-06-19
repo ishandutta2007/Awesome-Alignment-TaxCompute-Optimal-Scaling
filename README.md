@@ -62,3 +62,17 @@ To account for the alignment tax, the classic Chinchilla scaling equation must b
 | :--- | :--- | :--- | :--- |
 | [The Safe Compute Equation](details/safe_compute_equation.md) | Standard scaling targets a raw loss function:<br>$$L(N, D) = \frac{A}{N^\alpha} + \frac{B}{D^\beta} + E$$<br>Aligned scaling introduces a safety scaling penalty ($T_{align}$):<br>$$L_{safe}(N, D) = L(N, D) + T_{align}(N, D)$$ | 2022 | [Hoffmann et al. (Chinchilla)](https://arxiv.org/abs/2203.15556) |
 | [Parameters vs. Data Shift](details/parameters_data_shift.md) | Empirical tracking shows that safety behaviors require higher parameter thresholds ($N$) to manifest reliably compared to raw token ingestion ($D$).<br>As a result, a compute-optimal aligned model must be scaled **wider and deeper** earlier in its compute lifecycle than a raw unaligned base model. | 2020 | [Kaplan et al.](https://arxiv.org/abs/2001.08361) |
+
+---
+
+## 📈 Star History
+
+<div align="center">
+<a href="https://www.star-history.com/?repos=ishandutta2007%2FAwesome-Alignment-TaxCompute-Optimal-Scaling&type=date&legend=bottom-right">
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=ishandutta2007/Awesome-Alignment-TaxCompute-Optimal-Scaling&type=date&theme=dark&legend=bottom-right" />
+<source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=ishandutta2007/Awesome-Alignment-TaxCompute-Optimal-Scaling&type=date&legend=bottom-right" />
+<img alt="Star History Chart" src="https://api.star-history.com/chart?repos=ishandutta2007/Awesome-Alignment-TaxCompute-Optimal-Scaling&type=date&legend=bottom-right" />
+</picture>
+</a>
+</div>
